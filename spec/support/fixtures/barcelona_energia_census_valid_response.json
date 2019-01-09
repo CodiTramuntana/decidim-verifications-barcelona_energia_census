@@ -1,0 +1,81 @@
+{
+    "error": {
+        "code": 200,
+        "message": "OK"
+    },
+    "security_info": [
+        {
+            "option": "ElectricityData",
+            "enabled": "1",
+            "category": "",
+            "read": "0",
+            "write": "0",
+            "create": "0",
+            "delete": "0"
+        },
+        {
+            "option": "elect-contracts",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        },
+        {
+            "option": "elect-contract",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        },
+        {
+            "option": "elect-bills",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        },
+        {
+            "option": "CustomerData",
+            "enabled": "1",
+            "category": "",
+            "read": "0",
+            "write": "0",
+            "create": "0",
+            "delete": "0"
+        },
+        {
+            "option": "custom-documents",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        },
+        {
+            "option": "elect-incidence",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        },
+        {
+            "option": "mod-incidence",
+            "enabled": "0",
+            "category": "",
+            "read": "1",
+            "write": "1",
+            "create": "1",
+            "delete": "1"
+        }
+    ],
+    "token": "3744edcaf9227831b8b9b1208a8502c3e33b6a03"
+}
