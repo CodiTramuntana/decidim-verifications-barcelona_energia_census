@@ -12,6 +12,7 @@ module Decidim
       # - email: A String with the user email.
       # - password: a String encrypted with SHA1
       class BarcelonaEnergiaCensusAuthorizationHandler < Decidim::AuthorizationHandler
+        include ActionView::Helpers::SanitizeHelper
         attribute :email, String
         attribute :password, String
 

@@ -17,7 +17,7 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
       :granted,
       user: user2,
       name: 'barcelona_energia_census_authorization_handler',
-      metadata: { }
+      metadata: { token: "3744edcaf9227831b8b9b1208a8502c3e33b6a03" }
     )
   end
 
@@ -79,7 +79,8 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
       let!(:authorization) do
         create(:authorization,
                name: Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationHandler.handler_name,
-               user: user)
+               user: user,
+               metadata: { token: "3744edcaf9227831b8b9b1208a8502c3e33b6a03" })
       end
 
       it "shows the authorization at their account" do
