@@ -4,9 +4,13 @@ require 'digest'
 module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
-      # Checks the authorization against the BarcelonaEnergiaCensus.
-      # This class performs a check against the official census database in order
-      # to verify the barcelona energia Clients.
+      # Checks the authorization against the client census of Barcelona Energia to create authorizations.
+      # This AuthorizationHandler uses the Barcelona Energia census WS to VALIDATE
+      # if user is client or not.
+      #
+      # To send a request you MUST provide:
+      # - email: A String with the user email.
+      # - password: a String encrypted with SHA1
       class BarcelonaEnergiaCensusAuthorizationHandler < Decidim::AuthorizationHandler
         attribute :email, String
         attribute :password, String
@@ -15,7 +19,6 @@ module Decidim
         validates :password, presence: true
 
         validate :email_equal_to_user_email
-        validate :valid_response
         validate :valid_user
 
         # The only method that needs to be implemented for an authorization handler.
@@ -41,9 +44,9 @@ module Decidim
         # You must return a Hash that will be serialized to the authorization when
         # it's created, and available though authorization.metadata
         #
-        # def metadata
-        #   {}
-        # end
+        def metadata
+          super.merge(token: response_token)
+        end
 
         private
 
@@ -56,19 +59,12 @@ module Decidim
           end
         end
 
-        # Check if the response is ok or not
-        def valid_response
-          return nil if response.blank?
-          errors.add(:base, I18n.t('census_authorization_handler.connection_invalid')) unless response[:status] == 200
-        end
-
         def valid_user
           return nil if response.blank?
           case response_code
+          when 200
+            true
           when 422
-            raise
-            errors.add(:email, '')
-            errors.add(:password, '')
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid_email_or_password'))
             false
           when 403
@@ -78,7 +74,8 @@ module Decidim
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid'))
             false
           else
-            true
+            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.unexpected_error'))
+            false
           end
         end
 
@@ -90,14 +87,14 @@ module Decidim
           defined?(@response)
         end
 
-        def response_status
-          return nil if response.blank?
-          response[:status]
-        end
-
         def response_code
           return nil if response.blank?
           response[:body]['error']['code']
+        end
+
+        def response_token
+          return nil if response.blank?
+          response[:body]['token']
         end
 
         def response
@@ -105,13 +102,13 @@ module Decidim
 
           return @response if already_processed?
           begin
-            response ||= Faraday.post do |request|
+            rs = Faraday.post do |request|
               request.url Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.url
               request.body = request_body
             end
-            @response ||= {
-              body: JSON.parse(response.body),
-              status: response.status
+            @response = {
+              body: JSON.parse(rs.body),
+              status: rs.status
             }
           rescue Faraday::ConnectionFailed
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.connection_failed'))

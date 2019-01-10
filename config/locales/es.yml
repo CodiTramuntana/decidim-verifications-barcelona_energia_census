@@ -26,3 +26,4 @@ es:
         not_same_email: El correo electrónico que introduces no coincide con el que tienes la sesión iniciada.
         not_valid_email_or_password: El formato del correo electrónico o de la contraseña no son válidos.
         not_valid: Sus datos no corresponden con el censo.
+        unexpected_error: Algo ha ido mal. Por favor, inténtelo más tarde.

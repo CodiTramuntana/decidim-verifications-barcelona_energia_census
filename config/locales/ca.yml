@@ -26,3 +26,4 @@ ca:
         not_same_email: El correu electrònic que introdueixes no coincideix amb el que tens la sessió iniciada.
         not_valid_email_or_password: El format del correu electrònic o de la contrassenya no són vàlids.
         not_valid: Les seves dades no corresponen amb el cens.
+        unexpected_error: Alguna cosa ha anat malament. Siusplau, intenti-ho més tard.
