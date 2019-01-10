@@ -3,6 +3,9 @@
 module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
+      # This is a handler for BarcelonaEnergiaCensus config values.
+      # By now it only search for secret ones, but in future it could
+      # be filled by a config record
       class BarcelonaEnergiaCensusAuthorizationConfig
         class << self
           # Access URL for Barcelona Energia Census

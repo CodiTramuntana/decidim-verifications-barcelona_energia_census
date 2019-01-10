@@ -1,5 +1,7 @@
+<p><%= t(".helper_text", handler: t("#{handler.handler_name}.name", scope: "decidim.authorization_handlers")) %></p>
+
 <div class="field">
-  <%= form.email_field :email %>
+  <%= form.email_field :email, readonly: true,  value: current_user.email %>
 </div>
 
 <div class="field">

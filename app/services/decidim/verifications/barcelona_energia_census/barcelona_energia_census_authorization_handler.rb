@@ -4,9 +4,10 @@ require 'digest'
 module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
+      # Checks the authorization against the BarcelonaEnergiaCensus.
+      # This class performs a check against the official census database in order
+      # to verify the barcelona energia Clients.
       class BarcelonaEnergiaCensusAuthorizationHandler < Decidim::AuthorizationHandler
-        include ActionView::Helpers::SanitizeHelper
-
         attribute :email, String
         attribute :password, String
 
@@ -65,6 +66,7 @@ module Decidim
           return nil if response.blank?
           case response_code
           when 422
+            raise
             errors.add(:email, '')
             errors.add(:password, '')
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid_email_or_password'))
@@ -105,7 +107,6 @@ module Decidim
           begin
             response ||= Faraday.post do |request|
               request.url Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.url
-              request.headers['Content-Type'] = 'text/xml'
               request.body = request_body
             end
             @response ||= {

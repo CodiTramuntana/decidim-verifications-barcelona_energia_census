@@ -6,6 +6,11 @@ Decidim Verifications for Barcelona Energia Census.
 
 Decidim::Verifications::BarcelonaEnergiaCensus will be available as a Component for Verifications
 
+## How it works
+- The user must be registered as "normal" Decidim::User. with the same email as Barcelona Energia Platform.
+- Then, User goes to the Authorizations path and fill the fields email and password to verifiy the user. This connects to a WS with params (barcelona_energia_census_url, barcelona_energia_census_secret, barcelona_energia_census_interest) added on secrets.yml.
+- If the return is valid, the user is verified.
+
 ## Installation
 
 Add this line to your application's Gemfile:

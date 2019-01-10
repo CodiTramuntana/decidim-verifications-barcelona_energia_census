@@ -27,7 +27,7 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
       password: 'RaU6?Lqw'
     }
   end
-  
+
   let!(:invalid_barcelona_energia_census) do
     {
       email: 'test_unic_ko@nemon2ib.com',
@@ -54,15 +54,6 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
 
       expect(page).to have_current_path decidim_verifications.authorizations_path
       expect(page).to have_content('Has estat autoritzat amb èxit.')
-    end
-
-    it 'shows an error when email is not the same', barcelona_energia_census_stub_type: :valid do
-      submit_barcelona_energia_census_form(
-        email: invalid_barcelona_energia_census[:email],
-        password: invalid_barcelona_energia_census[:password]
-      )
-
-      expect(page).to have_content('El correu electrònic que introdueixes no coincideix amb el que tens la sessió iniciada.')
     end
 
     it 'shows an error when data is not valid in Barcelona Energia Census', barcelona_energia_census_stub_type: :invalid do
@@ -106,7 +97,7 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
   private
 
   def submit_barcelona_energia_census_form(email:, password:)
-    fill_in 'Correu electrònic', with: email
+
     fill_in 'Contrassenya', with: password
 
     click_button 'Enviar'

@@ -4,6 +4,9 @@ es:
       authorization_handler:
         email: Correo electrónico
         password: Contraseña
+  barcelona_energia_census_authorization:
+    form:
+      helper_text: Tienes que verificarte con el correo electrónico y la contraseña con la que estás dado de alta como %{handler}
   decidim:
     authorization_handlers:
       barcelona_energia_census_authorization_handler:
