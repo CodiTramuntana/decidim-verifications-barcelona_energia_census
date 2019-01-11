@@ -20,7 +20,7 @@ module Decidim
         validates :password, presence: true
 
         validate :email_equal_to_user_email
-        validate :valid_user
+        validate :barcelona_energia_census_valid?
 
         # The only method that needs to be implemented for an authorization handler.
         # Here you can add your business logic to check if the authorization should
@@ -39,18 +39,11 @@ module Decidim
           )
         end
 
-        # If you need to store any of the defined attributes in the authorization you
-        # can do it here.
-        #
-        # You must return a Hash that will be serialized to the authorization when
-        # it's created, and available though authorization.metadata
-        #
-        def metadata
-          super.merge(token: response_token)
-        end
-
         private
 
+        # Validate the email is the same than user email
+        #
+        # Returns a boolean
         def email_equal_to_user_email
           unless email == user.email
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email'))
@@ -60,57 +53,79 @@ module Decidim
           end
         end
 
-        def valid_user
-          return nil if response.blank?
-          case response_code
-          when 200
-            true
-          when 422
-            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid_email_or_password'))
-            false
-          when 403
-            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.cannot_validate'))
-            false
-          when 409
-            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid'))
-            false
+        # Checks the response of BarcelonaEnergiaCensus WS, and add errors in bad cases
+        #
+        # Returns a boolean
+        def barcelona_energia_census_valid?
+          return false if errors.any? || response.blank?
+          if success_response?
+            unless response_code == 200
+              case response_code
+              when 422
+                errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid_email_or_password'))
+                false
+              when 403
+                errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.cannot_validate'))
+                false
+              when 409
+                errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid'))
+                false
+              else
+                errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.unexpected_error'))
+                false
+              end
+            end
           else
-            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.unexpected_error'))
-            false
+            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.cannot_validate'))
           end
+          errors.empty?
         end
 
+        # Check for WS needed values
+        #
+        # Returns a boolean
         def uncomplete_credentials?
-          email.blank? || password.blank?
+          email.blank? && password.blank?
         end
 
-        def already_processed?
-          defined?(@response)
-        end
-
+        # Check the error code of body response
+        #
+        # Returns an Integer
         def response_code
           return nil if response.blank?
           response[:body]['error']['code']
         end
 
-        def response_token
-          return nil if response.blank?
-          response[:body]['token']
+        # Check if request had been correctly performed
+        #
+        # Returns a boolean
+        def success_response?
+          # Status code 200, success request. Otherwise, error
+          response[:status] == 200
         end
 
+        # Prepares and perform WS request.
+        # It rescue failed connections to SalouCensus
+        #
+        # Returns an stringified XML
         def response
           return nil if uncomplete_credentials?
 
           return @response if already_processed?
+
+          rs = request_ws
+          return nil unless rs
+
+          @response ||= { body: JSON.parse(rs.body), status: rs.status }
+        end
+
+        def request_ws
           begin
-            rs = Faraday.post do |request|
+            ws_response = Faraday.post do |request|
               request.url Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.url
               request.body = request_body
             end
-            @response = {
-              body: JSON.parse(rs.body),
-              status: rs.status
-            }
+            return ws_response
           rescue Faraday::ConnectionFailed
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.connection_failed'))
             return nil
@@ -130,6 +145,21 @@ module Decidim
               EnergyAdvicesInterest: Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.interest.to_s
             }
           }
+        end
+
+        # Check if request had benn already been processed and saved
+        #
+        # Returns a boolean
+        def already_processed?
+          defined?(@response)
+        end
+
+        # Check if request had been correctly performed
+        #
+        # Returns a boolean
+        def success_response?
+          # Status code 200, success request. Otherwise, error
+          response[:status] == 200
         end
 
         ## We encrypt with SHA1 for Barcelona Energía requirements

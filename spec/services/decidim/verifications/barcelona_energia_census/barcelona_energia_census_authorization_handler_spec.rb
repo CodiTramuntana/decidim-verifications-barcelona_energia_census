@@ -23,23 +23,7 @@ module Decidim
           }
         end
 
-        describe "to_partial_path" do
-          subject { handler.to_partial_path }
-
-          it { is_expected.to be_kind_of(String) }
-        end
-
-        describe "handler_name" do
-          subject { handler.handler_name }
-
-          it { is_expected.to be_kind_of(String) }
-        end
-
-        describe "metadata", barcelona_energia_census_stub_type: :valid do
-          subject { handler.metadata }
-
-          it { is_expected.to be_kind_of(Hash) }
-        end
+        it_behaves_like "an authorization handler"
 
         context "with a valid response" do
           before do
