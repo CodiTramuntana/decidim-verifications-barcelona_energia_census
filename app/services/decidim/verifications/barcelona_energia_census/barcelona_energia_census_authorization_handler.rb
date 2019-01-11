@@ -22,17 +22,6 @@ module Decidim
         validate :email_equal_to_user_email
         validate :barcelona_energia_census_valid?
 
-        # The only method that needs to be implemented for an authorization handler.
-        # Here you can add your business logic to check if the authorization should
-        # be created or not, you should return a Boolean value.
-        #
-        # Note that if you set some validations and overwrite this method, then the
-        # validations will not run, so it's easier to just remove this method and reite
-        # your logic using ActiveModel validations.
-        # def valid?
-        #   raise NotImplementedError
-        # end
-
         def unique_id
           Digest::SHA512.hexdigest(
             "#{email}-#{Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.secret}"
@@ -45,12 +34,7 @@ module Decidim
         #
         # Returns a boolean
         def email_equal_to_user_email
-          unless email == user.email
-            errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email'))
-            errors.add(:email, '')
-          else
-            true
-          end
+          errors.add(:email, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email')) unless email == user.email
         end
 
         # Checks the response of BarcelonaEnergiaCensus WS, and add errors in bad cases
@@ -63,16 +47,12 @@ module Decidim
               case response_code
               when 422
                 errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid_email_or_password'))
-                false
               when 403
                 errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.cannot_validate'))
-                false
               when 409
                 errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_valid'))
-                false
               else
                 errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.unexpected_error'))
-                false
               end
             end
           else
