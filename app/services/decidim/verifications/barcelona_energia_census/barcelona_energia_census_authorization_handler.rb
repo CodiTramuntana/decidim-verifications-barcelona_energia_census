@@ -12,7 +12,7 @@ module Decidim
       # - email: A String with the user email.
       # - password: a String encrypted with SHA1
       class BarcelonaEnergiaCensusAuthorizationHandler < Decidim::AuthorizationHandler
-        
+
         attribute :email, String
         attribute :password, String
 
@@ -85,9 +85,9 @@ module Decidim
         end
 
         # Prepares and perform WS request.
-        # It rescue failed connections to SalouCensus
+        # It rescue failed connections to BarcelonaEnergiaCensus
         #
-        # Returns an stringified XML
+        # Returns a JSON
         def response
           return nil if uncomplete_credentials?
 
