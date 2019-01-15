@@ -4,9 +4,9 @@ require 'digest'
 module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
-      # Checks the authorization against the client census of Barcelona Energia to create authorizations.
+      # Checks the authorization against the census of Barcelona Energia to create authorizations.
       # This AuthorizationHandler uses the Barcelona Energia census WS to VALIDATE
-      # if user is client or not.
+      # if user is a customer or not.
       #
       # To send a request you MUST provide:
       # - email: A String with the user email.
