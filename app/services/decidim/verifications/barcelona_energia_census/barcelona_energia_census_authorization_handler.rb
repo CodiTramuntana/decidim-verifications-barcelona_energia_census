@@ -20,7 +20,7 @@ module Decidim
         validates :password, presence: true
 
         validate :email_equal_to_user_email
-        validate :barcelona_energia_census_valid?
+        validate :in_barcelona_energia_census?
 
         def unique_id
           Digest::SHA512.hexdigest(
@@ -40,8 +40,13 @@ module Decidim
         # Checks the response of BarcelonaEnergiaCensus WS, and add errors in bad cases
         #
         # Returns a boolean
-        def barcelona_energia_census_valid?
-          return false if errors.any? || response.blank?
+        def in_barcelona_energia_census?
+          return false if errors.any? || uncomplete_credentials?
+
+          unless already_processed?
+            invoke_census_ws_for_validation
+          end
+
           if success_response?
             unless response_code == 200
               case response_code
@@ -72,8 +77,8 @@ module Decidim
         #
         # Returns an Integer
         def response_code
-          return nil if response.blank?
-          response[:body]['error']['code']
+          return nil if @response.blank?
+          @response[:body]['error']['code']
         end
 
         # Check if request had been correctly performed
@@ -81,37 +86,20 @@ module Decidim
         # Returns a boolean
         def success_response?
           # Status code 200, success request. Otherwise, error
-          response[:status] == 200
+          @response[:status] == 200
         end
 
-        # Prepares and perform WS request.
-        # It rescue failed connections to BarcelonaEnergiaCensus
-        #
-        # Returns a JSON
-        def response
-          return nil if uncomplete_credentials?
-
-          return @response if already_processed?
-
-          rs = request_ws
-          return nil unless rs
-
-          @response ||= { body: JSON.parse(rs.body), status: rs.status }
-        end
-
-        def request_ws
+        def invoke_census_ws_for_validation
           begin
             ws_response = Faraday.post do |request|
               request.url Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.url
               request.body = request_body
             end
-            return ws_response
+            @response ||= { body: JSON.parse(ws_response.body), status: ws_response.status }
           rescue Faraday::ConnectionFailed
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.connection_failed'))
-            return nil
           rescue Faraday::TimeoutError
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.connection_timeout'))
-            return nil
           end
         end
 
@@ -139,7 +127,7 @@ module Decidim
         # Returns a boolean
         def success_response?
           # Status code 200, success request. Otherwise, error
-          response[:status] == 200
+          @response[:status] == 200
         end
 
         ## We encrypt with SHA1 for Barcelona Energía requirements
