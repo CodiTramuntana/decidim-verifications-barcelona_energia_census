@@ -57,7 +57,7 @@ barcelona_energia_census:
 
 ## Versioning
 
-`Decidim::Verifications::BarcelonaEnergiaCensus` depends directly on `Decidim::Verifications` in `0.15.1` version.
+`Decidim::Verifications::BarcelonaEnergiaCensus` depends directly on `Decidim::Verifications` in `0.15.2` version.
 
 ## Contributing
 
