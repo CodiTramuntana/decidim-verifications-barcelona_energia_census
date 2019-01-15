@@ -25,10 +25,10 @@ module Decidim
 
         it_behaves_like "an authorization handler"
 
-        context "with a valid response" do
+        context "with a valid user" do
           before do
             allow(handler)
-              .to receive(:response)
+              .to receive(:in_barcelona_energia_census?)
           end
 
           describe "email" do
