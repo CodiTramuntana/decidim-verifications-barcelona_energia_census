@@ -95,7 +95,7 @@ module Decidim
               request.url Decidim::Verifications::BarcelonaEnergiaCensus::BarcelonaEnergiaCensusAuthorizationConfig.url
               request.body = request_body
             end
-            @response ||= { body: JSON.parse(ws_response.body), status: ws_response.status }
+            @response = { body: JSON.parse(ws_response.body), status: ws_response.status }
           rescue Faraday::ConnectionFailed
             errors.add(:base, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.connection_failed'))
           rescue Faraday::TimeoutError
@@ -104,7 +104,7 @@ module Decidim
         end
 
         def request_body
-          @request_body ||= {
+          {
             class: 'Session',
             action: 'loginExtraParams',
             data: {
