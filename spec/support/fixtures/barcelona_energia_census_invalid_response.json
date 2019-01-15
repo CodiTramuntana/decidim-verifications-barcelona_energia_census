@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": 403,
+    "message": "No se cumplen las condiciones adicionales para iniciar sesión"
+  }
+}

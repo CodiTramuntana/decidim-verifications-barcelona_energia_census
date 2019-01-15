@@ -1,0 +1,29 @@
+es:
+  activemodel:
+    attributes:
+      authorization_handler:
+        email: Correo electrónico
+        password: Contraseña
+  barcelona_energia_census_authorization:
+    form:
+      helper_text: Tienes que verificarte con el correo electrónico y la contraseña con la que estás dado de alta como %{handler}
+  decidim:
+    authorization_handlers:
+      barcelona_energia_census_authorization_handler:
+        explanation: Verificate con el correo electrónico que estás dado de alta en Barcelona Energía
+        name: Cliente de Barcelona Energia
+    verifications:
+      authorizations:
+        new:
+          authorize_with: Verificate como %{authorizer}
+  errors:
+    messages:
+      barcelona_energia_census_authorization_handler:
+        cannot_validate: El censo de Barcelona Energia no puede validar sus datos. No se cumplen las condiciones adicionales para verificarse
+        connection_failed: "No es posible conectar con el censo de Barcelona Energia. Por favor, inténtelo más tarde."
+        connection_timeout: "El censo de Barcelona Energia no está respondiendo a la verificación. Por favor, inténtelo más tarde."
+        duplicate_authorization: Estos datos ya han estás usadas.
+        not_same_email: El correo electrónico que introduces no coincide con el que tienes la sesión iniciada.
+        not_valid_email_or_password: El correo electrónico o la contraseña no son válidos.
+        not_valid: Sus datos no corresponden con el censo.
+        unexpected_error: Algo ha ido mal. Por favor, inténtelo más tarde.

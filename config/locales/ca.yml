@@ -1,0 +1,29 @@
+ca:
+  activemodel:
+    attributes:
+      authorization_handler:
+        email: Correu electrònic
+        password: Contrassenya
+  barcelona_energia_census_authorization:
+    form:
+      helper_text: T'has de verificar amb el correu electrònic i la contrassenya amb la que estàs donat d'alta com a %{handler}
+  decidim:
+    authorization_handlers:
+      barcelona_energia_census_authorization_handler:
+        explanation: Verifica't amb el correu electrònic que estàs donat d'alta a Barcelona Energia
+        name: Client de Barcelona Energia
+    verifications:
+      authorizations:
+        new:
+          authorize_with: Verifica't com a %{authorizer}
+  errors:
+    messages:
+      barcelona_energia_census_authorization_handler:
+        cannot_validate: El cens de Barcelona Energia no pot validar les seves dades. No es compleixen les condicions addicionals per verificar-se
+        connection_failed: "No es possible connectar amb el cens de Barcelona Energia. Siusplau, intenti-ho més tard."
+        connection_timeout: "El cens de Barcelona Energia no está responent a la verificació. Siusplau, intenti-ho més tard."
+        duplicate_authorization: Aquestes dades s'estan utilitzant
+        not_same_email: El correu electrònic que introdueixes no coincideix amb el que tens la sessió iniciada.
+        not_valid_email_or_password: El correu electrònic o la contrassenya no són vàlids.
+        not_valid: Les seves dades no corresponen amb el cens.
+        unexpected_error: Alguna cosa ha anat malament. Siusplau, intenti-ho més tard.
