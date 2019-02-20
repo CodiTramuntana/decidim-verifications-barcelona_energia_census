@@ -1,7 +1,11 @@
 <p><%= t(".helper_text", handler: t("#{handler.handler_name}.name", scope: "decidim.authorization_handlers")) %></p>
 
 <div class="field">
-  <%= form.email_field :email, readonly: true,  value: current_user.email %>
+  <% if controller_name == "impersonations" %>
+    <%= form.email_field :email %>
+  <% else %>
+    <%= form.email_field :email, readonly: true,  value: current_user.email %>
+  <% end %>
 </div>
 
 <div class="field">
@@ -10,3 +14,4 @@
 
 <%#  Is this necessary because we are overwritting%>
 <%= form.hidden_field :handler_name %>
+<%= form.hidden_field :controller_name, value: params[:controller_name] %>
