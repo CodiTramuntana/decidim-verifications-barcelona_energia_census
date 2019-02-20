@@ -15,6 +15,7 @@ module Decidim
 
         attribute :email, String
         attribute :password, String
+        attribute :controller_name, String
 
         validates :email, presence: true, 'valid_email_2/email': { disposable: true }
         validates :password, presence: true
@@ -34,7 +35,9 @@ module Decidim
         #
         # Returns a boolean
         def email_equal_to_user_email
-          errors.add(:email, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email')) unless email == user.email
+          unless controller_name == "impersonations"
+            errors.add(:email, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email')) unless email == user.email
+          end
         end
 
         # Checks the response of BarcelonaEnergiaCensus WS, and add errors in bad cases
