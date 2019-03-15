@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
+gem 'rails', '5.2.2.1'
+
 gemspec
 
 gem 'decidim', "~> 0.16.0"
