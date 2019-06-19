@@ -53,7 +53,7 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
       )
 
       expect(page).to have_current_path decidim_verifications.authorizations_path
-      expect(page).to have_content('Has estat autoritzat amb èxit.')
+      expect(page).to have_content('Has estat autoritzada amb correctament.')
     end
 
     it 'shows an error when data is not valid in Barcelona Energia Census', barcelona_energia_census_stub_type: :invalid do

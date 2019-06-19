@@ -5,7 +5,7 @@ module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
       def self.version
-        '0.2.2'
+        '0.2.3'
       end
     end
   end
