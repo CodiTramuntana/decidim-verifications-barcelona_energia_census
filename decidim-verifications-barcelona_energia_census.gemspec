@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['isaac.mg@coditramuntana.com']
   s.license = 'AGPL-3.0'
   s.homepage = 'https://github.com/decidim/decidim-module-decidim-verifications-barcelona_energia_census'
-  s.required_ruby_version = '>= 2.5.1'
+  s.required_ruby_version = '>= 2.6.6'
 
   s.name = 'decidim-verifications-barcelona_energia_census'
   s.summary = 'A decidim verifications barcelona energia census module'
@@ -18,12 +18,10 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,lib}/**/*', 'LICENSE-AGPLv3.txt', 'Rakefile', 'README.md']
 
-  DECIDIM_VERSION = '>= 0.16.0'
-
-  s.add_dependency 'decidim-core', DECIDIM_VERSION
-  s.add_dependency 'decidim-verifications', DECIDIM_VERSION
+  s.add_dependency 'decidim-core', Decidim::Verifications::BarcelonaEnergiaCensus.decidim_version
+  s.add_dependency 'decidim-verifications', Decidim::Verifications::BarcelonaEnergiaCensus.decidim_version
   s.add_dependency 'rails', '>= 5.2'
   s.add_dependency 'virtus-multiparams'
 
-  s.add_development_dependency 'decidim-dev', DECIDIM_VERSION
+  s.add_development_dependency 'decidim-dev', Decidim::Verifications::BarcelonaEnergiaCensus.decidim_version
 end

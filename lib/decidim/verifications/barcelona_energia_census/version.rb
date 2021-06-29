@@ -5,7 +5,11 @@ module Decidim
   module Verifications
     module BarcelonaEnergiaCensus
       def self.version
-        '0.2.3'
+        '0.2.4'
+      end
+
+      def self.decidim_version
+        '>= 0.23.0'
       end
     end
   end
