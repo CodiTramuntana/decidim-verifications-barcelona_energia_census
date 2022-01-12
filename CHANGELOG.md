@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.6
+- Increase minimum Decidim version to v0.24.0
+- Bump Ruby version to 2.7.2
 ## Version 0.2.5
 - Update addressable gem to 2.8
 

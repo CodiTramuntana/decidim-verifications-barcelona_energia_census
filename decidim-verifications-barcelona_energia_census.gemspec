@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['isaac.mg@coditramuntana.com']
   s.license = 'AGPL-3.0'
   s.homepage = 'https://github.com/decidim/decidim-module-decidim-verifications-barcelona_energia_census'
-  s.required_ruby_version = '>= 2.6.6'
+  s.required_ruby_version = '>= 2.7.5'
 
   s.name = 'decidim-verifications-barcelona_energia_census'
   s.summary = 'A decidim verifications barcelona energia census module'
