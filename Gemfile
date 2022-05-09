@@ -6,7 +6,7 @@ ruby RUBY_VERSION
 
 gemspec
 
-gem 'decidim', "~> 0.24.0"
+gem 'decidim', "~> 0.25.2"
 
 group :development, :test do
   gem 'byebug'
