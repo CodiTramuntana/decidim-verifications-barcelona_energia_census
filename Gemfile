@@ -8,6 +8,11 @@ gemspec
 
 gem 'decidim', "~> 0.24.0"
 
+gem 'doc2text' ,'>= 0.4.5'
+gem 'image_processing', '>= 1.12.2'
+gem 'nokogiri', '>= 1.13.4'
+gem 'puma','>= 5.6.4'
+
 group :development, :test do
   gem 'byebug'
   gem "bootsnap", require: true
