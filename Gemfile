@@ -10,7 +10,9 @@ gem 'decidim', "~> 0.24.0"
 
 gem 'doc2text' ,'>= 0.4.5'
 gem 'image_processing', '>= 1.12.2'
-gem 'nokogiri', '>= 1.13.4'
+# Remove this nokogiri forces version at any time but make sure that no __truncato_root__ text appears in the cards in general.
+# More exactly in comments in the homepage and in processes cards in the processes listing
+gem "nokogiri", "1.13.3"
 gem 'puma','>= 5.6.4'
 
 group :development, :test do
