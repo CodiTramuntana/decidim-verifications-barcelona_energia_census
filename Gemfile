@@ -15,6 +15,11 @@ gem 'image_processing', '>= 1.12.2'
 gem "nokogiri", "1.13.3"
 gem 'puma','>= 5.6.4'
 
+gem "actionview", ">= 5.2.7.1"
+gem "actionpack", ">= 5.2.7.1"
+gem "activestorage", ">= 5.2.6.3"
+gem "rails", "= 5.2.7.1"
+
 group :development, :test do
   gem 'byebug'
   gem "bootsnap", require: true
