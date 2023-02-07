@@ -17,7 +17,7 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
       :granted,
       user: user2,
       name: 'barcelona_energia_census_authorization_handler',
-      metadata: { token: "3744edcaf9227831b8b9b1208a8502c3e33b6a03" }
+      metadata: { token: "AsdfAsdfAsdfAsdfAsdfAsdf" }
     )
   end
 
