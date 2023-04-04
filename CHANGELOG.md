@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.8
+- Increase minimum Decidim version to v0.26.5
+
 ## Version 0.2.7
 - Increase minimum Decidim version to v0.25.2
 
