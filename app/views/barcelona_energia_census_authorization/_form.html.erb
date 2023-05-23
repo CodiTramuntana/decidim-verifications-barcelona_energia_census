@@ -4,7 +4,7 @@
   <% if controller_name == "impersonations" %>
     <%= form.email_field :email %>
   <% else %>
-    <%= form.email_field :email, readonly: true,  value: current_user.email %>
+    <%= form.email_field :email, value: current_user.email %>
   <% end %>
 </div>
 

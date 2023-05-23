@@ -20,7 +20,6 @@ module Decidim
         validates :email, presence: true, 'valid_email_2/email': { disposable: true }
         validates :password, presence: true
 
-        validate :email_equal_to_user_email
         validate :in_barcelona_energia_census?
 
         def unique_id
@@ -34,7 +33,7 @@ module Decidim
         # Validate the email is the same than user email
         #
         # Returns a boolean
-        def email_equal_to_user_email
+        def email_equal_to_user_email?
           unless controller_name == "impersonations"
             errors.add(:email, I18n.t('errors.messages.barcelona_energia_census_authorization_handler.not_same_email')) unless email == user.email
           end

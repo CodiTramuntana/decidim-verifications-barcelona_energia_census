@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.8
+- Remove validations to force the Decidim email and the verifier email to be the same.
+
 ## Version 0.2.7
 - Increase minimum Decidim version to v0.25.2
 
