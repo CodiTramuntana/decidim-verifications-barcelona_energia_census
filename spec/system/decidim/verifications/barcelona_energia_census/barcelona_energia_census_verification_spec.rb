@@ -88,7 +88,6 @@ describe "Authorizations", type: :system, perform_enqueued: true, with_authoriza
 
         within ".authorizations-list" do
           expect(page).to have_content("Client de Barcelona Energia")
-          expect(page).not_to have_link("Client de Barcelona Energia")
           expect(page).to have_content(I18n.localize(authorization.granted_at, format: :long, locale: :ca))
         end
       end

@@ -4,10 +4,11 @@ Decidim Verifications for Barcelona Energia Census.
 
 ## Usage
 
-Decidim::Verifications::BarcelonaEnergiaCensus will be available as a Component for Verifications
+Decidim::Verifications::BarcelonaEnergiaCensus will be available as a Verifier.
 
 ## How it works
-- The user must be registered as "normal" Decidim::User. with the same email as Barcelona Energia Platform.
+
+- The user must be registered as a "normal" Decidim::User. Ideally with the same email as Barcelona Energia Platform.
 - Then, User goes to the Authorizations path and fill the fields email and password to verifiy the user. This connects to a WS with params (barcelona_energia_census_url, barcelona_energia_census_secret, barcelona_energia_census_interest) added on secrets.yml.
 - If the return is valid, the user is verified.
 
@@ -37,27 +38,12 @@ barcelona_energia_census:
 ```
 ## Testing
 
-1. Run `bundle exec rake test_app`. **Execution will fail in an specific migration.**
+1. Run `bundle exec rake test_app`.
 
-2. cd `spec/decidim_dummy_app/` and:
+2. Edit `spec/decidim_dummy_app/config/secrets.rb` and add the yaml portion in the Installation chapter of this document. No need to set all the ENV varialbes, just set the secrets keys in the `default` parent blok, and set the following value: `barcelona_energia_census_url: https://example.net/census`.
 
-  2.1. Comment `up` execution in failing migration
+3. run tests with `bundle exec rspec`.
 
-  2.2. Execute...
-  ```bash
-  RAILS_ENV=test bundle exec rails db:drop
-  RAILS_ENV=test bundle exec rails db:create
-  RAILS_ENV=test bundle exec rails db:migrate
-  ```
-3. back to root folder `cd ../..`
-
-4. run tests with `bundle exec rspec`
-
-5. Remember to configure this new test App with configuration values.
-
-## Versioning
-
-`Decidim::Verifications::BarcelonaEnergiaCensus` depends directly on `Decidim::Verifications` in `0.16.0` version.
 
 ## Contributing
 
